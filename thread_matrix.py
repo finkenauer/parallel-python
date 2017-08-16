@@ -1,3 +1,4 @@
+from threading import Thread
 import threading
 import time
 import random
@@ -20,13 +21,6 @@ class myThread(threading.Thread):
     def run(self):
         mult_matrix(self.m1, self.m2, self.mf, self.n, self.beg, self.end)
 
-def print_time(threadName, counter, delay):
-    while counter:
-        if exitFlag:
-            threadName.exit()
-        time.sleep(delay)
-        print ("%s: %s" % (threadName, time.ctime(time.time())))
-        counter -= 1
 
 def create_matrix(n_rows, n_columns):
     matrix = []
@@ -48,7 +42,7 @@ def create_matrix(n_rows, n_columns):
 # M1 = matrix 1, M2 = matrix 2, MF = final matrix
 # n = size of matrices, beg = beginning of iteration, end = end of iteration
 def mult_matrix(m1, m2, mf, n, beg, end):
-
+  #with nogil:
     # row
     for i in range(beg, end):
         # line
@@ -63,7 +57,7 @@ def mult_matrix(m1, m2, mf, n, beg, end):
             # print(elem)
 
 
-n = 512
+n = 256
 
 x = create_matrix(n,n)
 y = create_matrix(n,n)
@@ -71,18 +65,14 @@ z = create_matrix(n,n)
 
 thread1 = myThread(1, x, y, z, n, 0, 128)
 thread2 = myThread(2, x, y, z, n, 128, 256)
-thread3 = myThread(3, x, y, z, n, 256, 384)
-thread3 = myThread(4, x, y, z, n, 384, 512)
+
 
 start = time.time()
 thread1.start()
 thread2.start()
-thread3.start()
-thread4.start()
-end = time.time()
 
 thread1.join()
 thread2.join()
-thread3.join()
-thread4.join()
+
+end = time.time()
 print(end - start)

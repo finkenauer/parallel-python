@@ -37,7 +37,7 @@ def mult_matrix(m1, m2, mf, n, beg, end):
             # print(elem)
 
 
-n = 1024
+n = 256
 
 x = create_matrix(n,n)
 y = create_matrix(n,n)
@@ -48,5 +48,5 @@ mult_matrix(x, y, z, n, 0, n)
 end = time.time()
 
 # mult_matrix(x, y, z, n, 2, 4)
-# print(z)
+#print(z)
 print(end - start)
