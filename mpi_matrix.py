@@ -69,13 +69,12 @@ def mult_matrix2(m1, m2, mf, n, beg, end, offset):
 comm = MPI.COMM_WORLD
 rank = MPI.COMM_WORLD.Get_rank()
 size = MPI.COMM_WORLD.Get_size()
-#name = MPI.Get_processor_name()
 
 
 counter = 0;
-print(rank)
+# print(rank)
 if rank == 0:
-    print("----START----")
+    # print("----START----")
     n = 256
     x = create_matrix(n,n)
     y = create_matrix(n,n)
@@ -89,8 +88,7 @@ if rank == 0:
     z = z1+z2
     end = time.time()
     print(end - start)
-    #print(z)
-    print("----END----")
+    # print("----END----")
 else:
     n = comm.recv(source=0, tag=7)
     x = comm.recv(source=0, tag=7)
@@ -98,4 +96,3 @@ else:
     z = create_null_matrix(128,n)
     mult_matrix2(x, y, z, n, 128, n, 128)
     comm.send(z, dest=0, tag=8)
-    print("Chablauu")
